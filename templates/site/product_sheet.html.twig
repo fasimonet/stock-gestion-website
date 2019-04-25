@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<section class="sheet" style="margin-top: 5px; margin-bottom: 5px">
+    <div class="container">
+        <article class="col-md-12">
+            <div class="card border-info mb-12">
+                <div class="card-header bg-primary" style="color: white">Fiche produit de {{ product.name }}</div>
+                <img class="card-img-bottom" style="width: 100%; display: block" src="{{ product.image }}" alt ="">
+                <div class="card-body">
+                    <h3>Code barre</h3>
+                    <label> {{ product.barcode }} </label>
+                    <h3>Stock</h3>
+                    <label> {{ product.stock }} </label>
+                    <h3>Rangement</h3>
+                    <label>Casier n° {{ product.localisation }} </label>
+                    <h3>Descriptif du produit</h3>
+                    <label> {{ product.description }} </label>
+                    <div class="actions" style="text-align : center">
+                        <div class="crud">
+                            <a href="{{ path('delete_product', {'id': product.id}) }}" type="button" class="btn btn-danger" style="margin: 2px">Supprimer</a>
+                            <a href="{{ path('edit_product', {'id': product.id}) }}" type="button" class="btn btn-success" style="margin: 2px">Modifier</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formProductCreation 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    {% if editMode %}
+        <h1>Modification d'un produit</h1>
+    {% else %} 
+        <h1>Création d'un produit</h1>
+    {% endif %}
+
+    {{ form_start(formProductCreation) }}
+        
+    {{ form_row(formProductCreation.name, {'label': 'Nom', 'attr': {'placeholder': 'Nom du produit'}}) }}
+    {{ form_row(formProductCreation.description, {'label': 'Description', 'attr': {'placeholder': 'Description du produit'}}) }}
+    {{ form_row(formProductCreation.barcode, {'label': 'Code barre'}) }}
+    {{ form_row(formProductCreation.image, {'label': 'Image', 'attr': {'placeholder': 'URL de l\'image du produit'}}) }}
+    {{ form_row(formProductCreation.localisation, {'label': 'Localisation', 'attr': {'placeholder': 'Localisation du produit'}}) }}
+    {{ form_row(formProductCreation.stock, {'label': 'Stock'}) }}
+    {{ form_row(formProductCreation.category, {'label': 'Catégorie', 'attr': {'placeholder': 'Catégorie du produit'}}) }}
+
+
+    <button type="submit" class="btn btn-primary">
+        {% if editMode %}
+            Enregistrer
+        {% else %} 
+            Créer un produit
+        {% endif %}
+    </a>
+    
+    {{ form_end(formProductCreation) }}
+
+{% endblock %}

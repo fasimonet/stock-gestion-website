@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SiteController!{% endblock %}
+
+{% block body %}
+
+<div class="container" style="margin-top: 5px; margin-bottom: 5px">
+    <input class="form-control" type="text" placeholder="Rechercher un produit" style="margin: 2px">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin: 0 auto">
+        <label class="btn btn-primary active">
+            <input type="radio" autocomplete="off" value="all"> Tous
+        </label>
+        <label class="btn btn-primary">
+            <input type="radio" autocomplete="off"> Support imprimable
+        </label>
+        <label class="btn btn-primary">
+            <input type="radio" autocomplete="off" value="ink"> Encre
+        </label>
+        <label class="btn btn-primary">
+            <input type="radio" autocomplete="off"> Produit chimique
+        </label>
+            <label class="btn btn-primary">
+            <input type="radio" autocomplete="off"> Autre
+        </label>
+    </div>
+    <a href="{{ path('create_product') }}" class="btn btn-success" style="float:right">Ajouter produit</a>
+</div>
+
+<section class="products">
+    <div class="container">
+        <div class="row">
+            {% for product in all_products %}
+                <article class="col-md-4">
+                    <div class="card border-info mb-3">
+                        <div class="card-header bg-primary" style="color: white">
+                            {% if product.stock == 0 %}
+                                <span class="badge badge-secondary" style="float: right; margin: 2px">Rupture de stock</span>
+                            {% endif %}
+                            {{ product.name }}
+                        </div>
+                        <img class="card-img-bottom-top" style="width: 100%; display: block" src="{{ product.image }}" alt ="">
+                        <div class="card-body">
+                            <p>Catégorie: {{ product.category }}</p>
+                            <p>Code barre : {{ product.barcode }}</p>
+                            <p>Stock : {{ product.stock }} </p>
+                            <div class="actions" style="text-align : center">
+                                <a href="{{ path('product_sheet', {'id': product.id}) }}" class="btn btn-primary" style="margin: 2px">Consulter la fiche produit</a>
+                                <div class="crud">
+                                    <a href="{{ path('delete_product', {'id': product.id}) }}" type="button" class="btn btn-danger" style="margin: 2px">Supprimer</button>
+                                    <a href="{{ path('edit_product', {'id': product.id}) }}" type="button" class="btn btn-success" style="margin: 2px">Modifier</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="pagination">
+        {{ knp_pagination_render(all_products) }}
+    </div>
+</section>
+
+{% endblock %}
