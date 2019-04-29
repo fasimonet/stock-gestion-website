@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Entity\ProductSearch;
 use App\Form\ProductType;
+use App\Form\ProductSearchType;
 use App\Repository\ProductRepository;
 
 use Doctrine\Common\Persistence\ObjectManager;
@@ -23,6 +25,10 @@ class ProductController extends AbstractController
      */
     public function index(ProductRepository $repo, PaginatorInterface $paginator, Request $request): Response
     {
+        $search = new ProductSearch();
+        $search_form = $this->createForm(ProductSearchType::class, $search);
+        $search_form->handleRequest($request);
+
         $all_products = $paginator->paginate(
             $repo->findAll(),
             $request->query->getInt('page', 1),
@@ -31,7 +37,8 @@ class ProductController extends AbstractController
 
         return $this->render('site/index.html.twig', [
             'controller_name' => 'SiteController',
-            'all_products' => $all_products
+            'all_products' => $all_products,
+            'search_form' => $search_form->createView()
         ]);
     }
 
@@ -85,5 +92,25 @@ class ProductController extends AbstractController
         $manager->flush();
 
         return $this->redirectToRoute('site');
+    }
+
+    /**
+     * @Route("/pole_plurimedia/search_product", name="search_product")
+     * @return Response
+     */
+    public function search_product(ProductRepository $repo, PaginatorInterface $paginator, Request $request)
+    {
+        $all_products = $paginator->paginate(
+            $repo->findBy(
+                ['name' => 'Best product of the world'] 
+            ),
+            $request->query->getInt('page', 1),
+            12
+        );
+
+        return $this->render('site/index.html.twig', [
+            'controller_name' => 'SiteController',
+            'all_products' => $all_products
+        ]);
     }
 }

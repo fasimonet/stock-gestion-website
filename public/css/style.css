@@ -1,0 +1,13 @@
+.pagination {
+    margin-left: auto;
+    margin-right: auto;
+    width: 350px;
+}
+
+.test {
+    color: red;
+}
+
+.error-header {
+    display: inline-block;
+}

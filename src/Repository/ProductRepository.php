@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Entity\ProductSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -47,4 +48,15 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @return Query
+     */
+    public function findAllWithSearchManagement(ProductSearch $search_product): Query
+    {
+        return $this->findAll()
+                    ->getQuery();
+
+         
+    }
 }
