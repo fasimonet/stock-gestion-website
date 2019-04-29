@@ -51,6 +51,11 @@ class Product
      */
     private $category;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $barCode;
+
     public function getId(): ?int
     {
         return $this->id;

@@ -11,3 +11,7 @@
 .error-header {
     display: inline-block;
 }
+
+.error-img {
+    text-align: center;
+}

@@ -4,31 +4,47 @@
 
 {% block body %}
 
-    {% if editMode %}
-        <h1>Modification d'un produit</h1>
-    {% else %} 
-        <h1>Création d'un produit</h1>
-    {% endif %}
-
-    {{ form_start(formProductCreation) }}
-        
-    {{ form_row(formProductCreation.name, {'label': 'Nom', 'attr': {'placeholder': 'Nom du produit'}}) }}
-    {{ form_row(formProductCreation.description, {'label': 'Description', 'attr': {'placeholder': 'Description du produit'}}) }}
-    {{ form_row(formProductCreation.barcode, {'label': 'Code barre'}) }}
-    {{ form_row(formProductCreation.image, {'label': 'Image', 'attr': {'placeholder': 'URL de l\'image du produit'}}) }}
-    {{ form_row(formProductCreation.localisation, {'label': 'Localisation', 'attr': {'placeholder': 'Localisation du produit'}}) }}
-    {{ form_row(formProductCreation.stock, {'label': 'Stock'}) }}
-    {{ form_row(formProductCreation.category, {'label': 'Catégorie', 'attr': {'placeholder': 'Catégorie du produit'}}) }}
-
-
-    <button type="submit" class="btn btn-primary">
+    {% if not app.user %}
+        <div class="container">
+            <div class="jumbotron">
+                <div class="error-header">
+                    <span class="badge badge-danger">Erreur</span>
+                    <h2>Erreur 403 : Accès refusé</h2>
+                </div>
+            <p>Vous n'avez pas la permission d'accéder à la page : <strong> {{ app.request.uri }} </strong>. Veuillez vous connecter pour y remédier.</p>
+                <div class="error-img">
+                    <img src="http://avenirclimatique.org/wp-content/uploads/2015/05/forbidden.png"/>
+                </div>
+            </div>
+        </div>
+    {% else %}
         {% if editMode %}
-            Enregistrer
+            <h1>Modification d'un produit</h1>
         {% else %} 
-            Créer un produit
+            <h1>Création d'un produit</h1>
         {% endif %}
-    </a>
-    
-    {{ form_end(formProductCreation) }}
+
+        {{ form_start(formProductCreation) }}
+            
+        {{ form_row(formProductCreation.name, {'label': 'Nom', 'attr': {'placeholder': 'Nom du produit'}}) }}
+        {{ form_row(formProductCreation.description, {'label': 'Description', 'attr': {'placeholder': 'Description du produit'}}) }}
+        {{ form_row(formProductCreation.barcode, {'label': 'Code barre'}) }}
+        {{ form_row(formProductCreation.image, {'label': 'Image', 'attr': {'placeholder': 'URL de l\'image du produit'}}) }}
+        {{ form_row(formProductCreation.localisation, {'label': 'Localisation', 'attr': {'placeholder': 'Localisation du produit'}}) }}
+        {{ form_row(formProductCreation.stock, {'label': 'Stock'}) }}
+        {{ form_row(formProductCreation.category, {'label': 'Catégorie', 'attr': {'placeholder': 'Catégorie du produit'}}) }}
+
+
+        <button type="submit" class="btn btn-primary">
+            {% if editMode %}
+                Enregistrer
+            {% else %} 
+                Créer un produit
+            {% endif %}
+        </a>
+        
+        {{ form_end(formProductCreation) }}
+
+    {% endif %}
 
 {% endblock %}

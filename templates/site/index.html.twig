@@ -11,8 +11,11 @@
                 <span class="badge badge-danger">Erreur</span>
                 <h2>Erreur 403 : Accès refusé</h2>
             </div>
-            <p>Vous devez être connecté pour accéder à cette page.</p>
-            <img src="https://banner2.kisspng.com/20180530/igh/kisspng-panneau-de-signalisation-de-sens-interdit-en-franc-5b0f6a5029b4e8.1092933515277369121708.jpg"/>
+            <p>Vous n'avez pas la permission d'accéder à la page : <strong> {{ app.request.uri }} </strong>. Veuillez vous connecter pour y remédier.</p>
+            <br/>
+            <div class="error-img">
+                <img src="http://avenirclimatique.org/wp-content/uploads/2015/05/forbidden.png"/>
+            </div>
         </div>
     {% else %}
         <div class="jumbotron">
@@ -40,42 +43,41 @@
             </label>
         </div>
         <a href="{{ path('create_product') }}" class="btn btn-success" style="float:right">Ajouter produit</a>
-    </div>
-
-    <section class="products">
-        <div class="container">
-            <div class="row">
-                {% for product in all_products %}
-                    <article class="col-md-4">
-                        <div class="card border-primary mb-3">
-                            <div class="card-header bg-primary" style="color: white">
-                                {% if product.stock == 0 %}
-                                    <span class="badge badge-danger" style="float: right; margin: 2px">Rupture de stock</span>
-                                {% endif %}
-                                {{ product.name }}
-                            </div>
-                            <img class="card-img-bottom-top" style="width: 100%; display: block" src="{{ product.image }}" alt ="">
-                            <div class="card-body">
-                                <p>Catégorie: {{ product.category }}</p>
-                                <p>Code barre : {{ product.barcode }}</p>
-                                <p>Stock : {{ product.stock }} </p>
-                                <div class="actions" style="text-align : center">
-                                    <a href="{{ path('product_sheet', {'id': product.id}) }}" class="btn btn-primary" style="margin: 2px">Consulter la fiche produit</a>
-                                    <div class="crud">
-                                        <a href="{{ path('delete_product', {'id': product.id}) }}" type="button" class="btn btn-danger" style="margin: 2px">Supprimer</button>
-                                        <a href="{{ path('edit_product', {'id': product.id}) }}" type="button" class="btn btn-success" style="margin: 2px">Modifier</a>
+</div>
+        <section class="products">
+            <div class="container">
+                <div class="row">
+                    {% for product in all_products %}
+                        <article class="col-md-4">
+                            <div class="card border-primary mb-3">
+                                <div class="card-header bg-primary" style="color: white">
+                                    {% if product.stock == 0 %}
+                                        <span class="badge badge-danger" style="float: right; margin: 2px">Rupture de stock</span>
+                                    {% endif %}
+                                    {{ product.name }}
+                                </div>
+                                <img class="card-img-bottom-top" style="width: 100%; display: block" src="{{ product.image }}" alt ="">
+                                <div class="card-body">
+                                    <p>Catégorie: {{ product.category }}</p>
+                                    <p>Code barre : {{ product.barcode }}</p>
+                                    <p>Stock : {{ product.stock }} </p>
+                                    <div class="actions" style="text-align : center">
+                                        <a href="{{ path('product_sheet', {'id': product.id}) }}" class="btn btn-primary" style="margin: 2px">Consulter la fiche produit</a>
+                                        <div class="crud">
+                                            <a href="{{ path('delete_product', {'id': product.id}) }}" type="button" class="btn btn-danger" style="margin: 2px">Supprimer</button>
+                                            <a href="{{ path('edit_product', {'id': product.id}) }}" type="button" class="btn btn-success" style="margin: 2px">Modifier</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </article>
-                {% endfor %}
+                        </article>
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-        <div class="pagination">
-            {{ knp_pagination_render(all_products) }}
-        </div>
-    </section>
+            <div class="pagination">
+                {{ knp_pagination_render(all_products) }}
+            </div>
+        </section>
     {% endif %}
 </div>
 

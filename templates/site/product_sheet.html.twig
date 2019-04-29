@@ -4,38 +4,51 @@
 
 <section class="sheet" style="margin-top: 5px; margin-bottom: 5px">
     <div class="container">
-        <article class="col-md-12">
-            <div class="card border-primary mb-12">
-                <div class="card-header bg-primary" style="color: white">Fiche produit de {{ product.name }}</div>
-                <img class="card-img-bottom" style="width: 100%; display: block" src="{{ product.image }}" alt ="">
-                <div class="card-body">
-                    <hr/>
-                    <h3>Code barre</h3>
-                    <label> {{ product.barcode }} </label>
-                    <hr/>
-                    <h3>Stock</h3>
-                    <label> {{ product.stock }} </label>
-                    {% if product.stock == 0 %}
-                        <br/>
-                        <span class="badge badge-danger">Attention !</span>
-                        Ce produit est en rupture de stock !
-                    {% endif %}
-                    <hr/>
-                    <h3>Rangement</h3>
-                    <label>Casier n° {{ product.localisation }} </label>
-                    <hr/>
-                    <h3>Descriptif du produit</h3>
-                    <label> {{ product.description }} </label>
-                    <hr/>
-                    <div class="actions" style="text-align : center">
-                        <div class="crud">
-                            <a href="{{ path('delete_product', {'id': product.id}) }}" type="button" class="btn btn-danger" style="margin: 2px">Supprimer</a>
-                            <a href="{{ path('edit_product', {'id': product.id}) }}" type="button" class="btn btn-success" style="margin: 2px">Modifier</a>
+        {% if not app.user %}
+            <div class="jumbotron">
+                <div class="error-header">
+                    <span class="badge badge-danger">Erreur</span>
+                    <h2>Erreur 403 : Accès refusé</h2>
+                </div>
+            <p>Vous n'avez pas la permission d'accéder à la page : <strong> {{ app.request.uri }} </strong>. Veuillez vous connecter pour y remédier.</p>
+                <div class="error-img">
+                    <img src="http://avenirclimatique.org/wp-content/uploads/2015/05/forbidden.png"/>
+                </div>
+            </div>
+        {% else %}
+            <article class="col-md-12">
+                <div class="card border-primary mb-12">
+                    <div class="card-header bg-primary" style="color: white">Fiche produit de {{ product.name }}</div>
+                    <img class="card-img-bottom" style="width: 100%; display: block" src="{{ product.image }}" alt ="">
+                    <div class="card-body">
+                        <hr/>
+                        <h3>Code barre</h3>
+                        <label> {{ product.barcode }} </label>
+                        <hr/>
+                        <h3>Stock</h3>
+                        <label> {{ product.stock }} </label>
+                        {% if product.stock == 0 %}
+                            <br/>
+                            <span class="badge badge-danger">Attention !</span>
+                            Ce produit est en rupture de stock !
+                        {% endif %}
+                        <hr/>
+                        <h3>Rangement</h3>
+                        <label>Casier n° {{ product.localisation }} </label>
+                        <hr/>
+                        <h3>Descriptif du produit</h3>
+                        <label> {{ product.description }} </label>
+                        <hr/>
+                        <div class="actions" style="text-align : center">
+                            <div class="crud">
+                                <a href="{{ path('delete_product', {'id': product.id}) }}" type="button" class="btn btn-danger" style="margin: 2px">Supprimer</a>
+                                <a href="{{ path('edit_product', {'id': product.id}) }}" type="button" class="btn btn-success" style="margin: 2px">Modifier</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </article>
+            </article>
+        {% endif %}
     </div>
 </section>
 
