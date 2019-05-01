@@ -21,7 +21,7 @@
         <div class="jumbotron">
             {{ form_start(search_form) }}
             {{ form_row(search_form.name, {'label': 'Nom', 'attr': {'placeholder': 'Nom du produit à rechercher'}}) }}
-            {{ form_row(search_form.barcode, {'label': 'Code barre', 'attr': {'placeholder': 'Code barre du produit à rechercher'}}) }}
+            {{ form_row(search_form.barCode, {'label': 'Code barre', 'attr': {'placeholder': 'Code barre du produit à rechercher'}}) }}
             <button class="btn btn-primary">Rechercher</button>
             {{ form_end(search_form) }}
         </div>
@@ -46,6 +46,10 @@
 </div>
         <section class="products">
             <div class="container">
+                {% if all_products|length == 0 %}
+                    <hr>
+                    <label>Aucun produit ne correspond à la recherche.</label>
+                {% else %}
                 <div class="row">
                     {% for product in all_products %}
                         <article class="col-md-4">
@@ -59,7 +63,7 @@
                                 <img class="card-img-bottom-top" style="width: 100%; display: block" src="{{ product.image }}" alt ="">
                                 <div class="card-body">
                                     <p>Catégorie: {{ product.category }}</p>
-                                    <p>Code barre : {{ product.barcode }}</p>
+                                    <p>Code barre : {{ product.barCode }}</p>
                                     <p>Stock : {{ product.stock }} </p>
                                     <div class="actions" style="text-align : center">
                                         <a href="{{ path('product_sheet', {'id': product.id}) }}" class="btn btn-primary" style="margin: 2px">Consulter la fiche produit</a>
@@ -73,6 +77,7 @@
                         </article>
                     {% endfor %}
                 </div>
+                {% endif %}
             </div>
             <div class="pagination">
                 {{ knp_pagination_render(all_products) }}

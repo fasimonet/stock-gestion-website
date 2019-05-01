@@ -20,17 +20,33 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends AbstractController
 {
     /**
+     * @var ProductRepository
+     */
+    private $repo;
+
+    /**
+     * @var ObjectManager
+     */
+    private $manager;
+
+    public function __construct(ProductRepository $repo, ObjectManager $manager)
+    {
+        $this->repo = $repo;
+        $this->manager = $manager;
+    }
+
+    /**
      * @Route("/pole_plurimedia", name="site")
      * @return Response
      */
-    public function index(ProductRepository $repo, PaginatorInterface $paginator, Request $request): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
         $search = new ProductSearch();
         $search_form = $this->createForm(ProductSearchType::class, $search);
         $search_form->handleRequest($request);
 
         $all_products = $paginator->paginate(
-            $repo->findAll(),
+            $this->repo->findAllWithSearchManagement($search),
             $request->query->getInt('page', 1),
             12
         );
@@ -38,6 +54,7 @@ class ProductController extends AbstractController
         return $this->render('site/index.html.twig', [
             'controller_name' => 'SiteController',
             'all_products' => $all_products,
+            'current_menu' => 'stock_management',
             'search_form' => $search_form->createView()
         ]);
     }
@@ -49,7 +66,8 @@ class ProductController extends AbstractController
     public function product_sheet(Product $product): Response
     {
         return $this->render('site/product_sheet.html.twig', [
-            'product' => $product
+            'product' => $product,
+            'current_menu' => 'stock_management'
         ]);
     }
 
@@ -58,7 +76,7 @@ class ProductController extends AbstractController
      * @Route("/pole_plurimedia/product_sheet/{id}/edit", name="edit_product")
      * @return Response
      */
-    public function form_product(Product $product = null, Request $request, ObjectManager $manager): Response
+    public function form_product(Product $product = null, Request $request): Response
     {
         if(!$product)
         {
@@ -70,15 +88,16 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $manager->persist($product);
-            $manager->flush();
+            $this->manager->persist($product);
+            $this->manager->flush();
 
             return $this->redirectToRoute('site');
         }
 
         return $this->render('site/create_product.html.twig', [
             'formProductCreation' => $form->createView(),
-            'editMode' => $product->getId() !== null
+            'editMode' => $product->getId() !== null,
+            'current_menu' => 'stock_management'
         ]);
     }
 
@@ -86,10 +105,10 @@ class ProductController extends AbstractController
      * @Route("/pole_plurimedia/product/{id}/delete", name="delete_product")
      * @return Response
      */
-    public function delete_product(Product $product, ObjectManager $manager): Response
+    public function delete_product(Product $product): Response
     {
-        $manager->remove($product);
-        $manager->flush();
+        $this->manager->remove($product);
+        $this->manager->flush();
 
         return $this->redirectToRoute('site');
     }
@@ -98,10 +117,10 @@ class ProductController extends AbstractController
      * @Route("/pole_plurimedia/search_product", name="search_product")
      * @return Response
      */
-    public function search_product(ProductRepository $repo, PaginatorInterface $paginator, Request $request)
+    public function search_product(PaginatorInterface $paginator, Request $request): Response
     {
         $all_products = $paginator->paginate(
-            $repo->findBy(
+            $this->repo->findBy(
                 ['name' => 'Best product of the world'] 
             ),
             $request->query->getInt('page', 1),
@@ -110,7 +129,8 @@ class ProductController extends AbstractController
 
         return $this->render('site/index.html.twig', [
             'controller_name' => 'SiteController',
-            'all_products' => $all_products
+            'all_products' => $all_products,
+            'current_menu' => 'stock_management',
         ]);
     }
 }

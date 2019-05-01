@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Product;
 use App\Entity\ProductSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -52,11 +54,28 @@ class ProductRepository extends ServiceEntityRepository
     /**
      * @return Query
      */
-    public function findAllWithSearchManagement(ProductSearch $search_product): Query
+    public function findAllWithSearchManagement(ProductSearch $search): Query
     {
-        return $this->findAll()
-                    ->getQuery();
+        $query = $this->findAllQuery();
+        /* ->andWhere('p.name = :name')*/
+        if ($search->getName()) {
+            $query = $query->andWhere('REGEXP(p.name, :regexp) = true')
+                           ->setParameter('regexp', '.*'.$search->getName().'.*');
+        }
 
-         
+        if ($search->getBarCode()) {
+            $query = $query->andWhere('REGEXP(p.barCode, :regexp) = true')
+                           ->setParameter('regexp', '.*'.$search->getBarCode().'.*');            
+        }
+
+        dump($search);
+        return $query->getQuery();    
     }
+
+    public function findAllQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('p');
+    }
+
+
 }

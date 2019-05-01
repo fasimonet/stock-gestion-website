@@ -30,20 +30,11 @@ class UserController extends AbstractController
 
         return $this->render('site/user_pannel.html.twig', [
             'controller_name' => 'SiteController',
-            'users' => $users
+            'users' => $users,
+            'current_menu' => 'user_management'
         ]);
     }
-
-    /**
-     * @Route("/", name="home")
-     * @return Response
-     */
-    public function home(Request $request, ObjectManager $manager): Response
-    {
-        return $this->render('site/home.html.twig');
-    }
-
-   
+ 
     /**
      * @Route("/pole_plurimedia/user_pannel/{id}/delete", name="delete_user")
      * @return Response
@@ -56,6 +47,9 @@ class UserController extends AbstractController
         return $this->redirectToRoute('user_pannel');
     }
 
+    /**
+     * @return Response
+     */
     public function form_user(User $user = null, Request $request, ObjectManager $manager): Response
     {
         if(!$user)

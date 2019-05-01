@@ -27,11 +27,6 @@ class Product
     private $description;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $barcode;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
@@ -85,14 +80,14 @@ class Product
         return $this;
     }
 
-    public function getBarcode(): ?int
+    public function getBarCode(): ?string
     {
-        return $this->barcode;
+        return $this->barCode;
     }
 
-    public function setBarcode(int $barcode): self
+    public function setBarCode(string $barCode): self
     {
-        $this->barcode = $barcode;
+        $this->barCode = $barCode;
 
         return $this;
     }

@@ -10,9 +10,9 @@ class ProductSearch
     private $name;
 
     /**
-     * @var int|null
+     * @var string|null
      */
-    private $barcode;
+    private $barCode;
 
     /**
      * @return string|null
@@ -33,21 +33,20 @@ class ProductSearch
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getBarcode(): ?int
+    public function getBarCode(): ?string
     {
-        return $this->barcode;
+        return $this->barCode;
     }
 
     /**
-     * @param int|null $barcode
+     * @param string|null $barCode
      * @return ProductSearch
      */
-    public function setBarcode(int $barcode): self
+    public function setBarCode(string $barCode): self
     {
+        $this->barCode = $barCode;
         return $this;
     }
-
-
 }

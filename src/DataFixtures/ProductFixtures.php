@@ -16,7 +16,7 @@ class ProductFixtures extends Fixture
 
             $product->setName("product $i")
                     ->setDescription("the product $i is an amazing product ! You are not ready !")
-                    ->setBarcode(12345678 + $i)
+                    ->setBarCode("I12345$i")
                     ->setImage("http://placehold.it/350x150")
                     ->setLocalisation("casier $i")
                     ->setStock($i + 10)
@@ -31,7 +31,7 @@ class ProductFixtures extends Fixture
 
             $product->setName("product $i")
                     ->setDescription("the product $i is an amazing product ! You are not ready !")
-                    ->setBarcode(12345678 + $i)
+                    ->setBarCode("I12345$i")
                     ->setImage("http://placehold.it/350x150")
                     ->setLocalisation("casier $i")
                     ->setStock($i + 10)
@@ -46,7 +46,7 @@ class ProductFixtures extends Fixture
 
             $product->setName("product $i")
                     ->setDescription("the product $i is an amazing product ! You are not ready !")
-                    ->setBarcode(12345678 + $i)
+                    ->setBarCode("I12345$i")
                     ->setImage("http://placehold.it/350x150")
                     ->setLocalisation("casier $i")
                     ->setStock($i + 10)
@@ -61,7 +61,7 @@ class ProductFixtures extends Fixture
 
             $product->setName("product $i")
                     ->setDescription("the product $i is an amazing product ! You are not ready !")
-                    ->setBarcode(12345678 + $i)
+                    ->setBarCode("I12345$i")
                     ->setImage("http://placehold.it/350x150")
                     ->setLocalisation("casier $i")
                     ->setStock($i + 10)

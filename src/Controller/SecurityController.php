@@ -16,8 +16,9 @@ class SecurityController extends AbstractController
 {
     /**
      * @Route("/inscription", name="security_registration")
+     * @return Response
      */
-    public function registration(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
+    public function registration(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
@@ -35,7 +36,8 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('security/registration.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'current_menu' => 'user_management'
         ]);
     }
 

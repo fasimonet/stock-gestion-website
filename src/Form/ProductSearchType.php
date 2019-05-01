@@ -13,7 +13,7 @@ class ProductSearchType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('barcode')
+            ->add('barCode')
         ;
     }
 
