@@ -57,7 +57,7 @@ class ProductRepository extends ServiceEntityRepository
     public function findAllWithSearchManagement(ProductSearch $search): Query
     {
         $query = $this->findAllQuery();
-        /* ->andWhere('p.name = :name')*/
+  
         if ($search->getName()) {
             $query = $query->andWhere('REGEXP(p.name, :regexp) = true')
                            ->setParameter('regexp', '.*'.$search->getName().'.*');

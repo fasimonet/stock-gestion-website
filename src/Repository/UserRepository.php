@@ -3,7 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\UserSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -47,4 +50,30 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+        /**
+     * @return Query
+     */
+    public function findAllWithSearchManagement(UserSearch $search): Query
+    {
+        $query = $this->findAllQuery();
+  
+        if ($search->getFirstName()) {
+            $query = $query->andWhere('REGEXP(u.firstname, :regexp) = true')
+                           ->setParameter('regexp', '.*'.$search->getFirstname().'.*');
+        }
+
+        if ($search->getLastName()) {
+            $query = $query->andWhere('REGEXP(u.lastname, :regexp) = true')
+                           ->setParameter('regexp', '.*'.$search->getLastname().'.*');            
+        }
+
+        dump($search);
+        return $query->getQuery();    
+    }
+
+    public function findAllQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('u');
+    }
 }

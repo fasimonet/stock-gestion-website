@@ -3,8 +3,7 @@
 {% block title %}Hello SiteController!{% endblock %}
 
 {% block body %}
-
-<div class="container" style="margin-top: 5px; margin-bottom: 5px">
+<div class="container">
     {% if not app.user %}
         <div class="jumbotron">
             <div class="error-header">
@@ -17,7 +16,13 @@
             </div>
         </div>
     {% else %}
-        <input class="form-control" type="text" placeholder="Rechercher un utilisateur">
+        <div class="jumbotron">
+            {{ form_start(search_form) }}
+            {{ form_row(search_form.firstname, {'label': 'Prénom', 'attr': {'placeholder': 'Nom du produit à rechercher'}}) }}
+            {{ form_row(search_form.lastname, {'label': 'Nom', 'attr': {'placeholder': 'Nom du produit à rechercher'}}) }}
+            <button class="btn btn-primary">Rechercher</button>
+            {{ form_end(search_form) }}
+        </div>
         <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin: auto">
             <label class="btn btn-primary active">
                 <input type="radio" checked="" autocomplete="off"> Tous
@@ -31,7 +36,7 @@
         </div>
 
         <a href="#" class="btn btn-success" style="float:right">Ajouter utilisateur</a>
-    </div>
+</div>
 
         <section class="users">
             <div class="container">
