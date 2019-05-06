@@ -10,62 +10,15 @@ class ProductFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        for($i = 1; $i <= 20; $i++)
+        for($i = 1; $i <=10; $i++)
         {
-            $product = new Product();
-
-            $product->setName("product $i")
-                    ->setDescription("the product $i is an amazing product ! You are not ready !")
-                    ->setBarCode("I12345$i")
-                    ->setImage("http://placehold.it/350x150")
-                    ->setLocalisation("casier $i")
-                    ->setStock($i + 10)
-                    ->setCategory("ink");
-
-            $manager->persist($product);
-        }
-
-        for($i = 21; $i <= 40; $i++)
-        {
-            $product = new Product();
-
-            $product->setName("product $i")
-                    ->setDescription("the product $i is an amazing product ! You are not ready !")
-                    ->setBarCode("I12345$i")
-                    ->setImage("http://placehold.it/350x150")
-                    ->setLocalisation("casier $i")
-                    ->setStock($i + 10)
-                    ->setCategory("chemical");
-
-            $manager->persist($product);
-        }
-
-        for($i = 411; $i <= 60; $i++)
-        {
-            $product = new Product();
-
-            $product->setName("product $i")
-                    ->setDescription("the product $i is an amazing product ! You are not ready !")
-                    ->setBarCode("I12345$i")
-                    ->setImage("http://placehold.it/350x150")
-                    ->setLocalisation("casier $i")
-                    ->setStock($i + 10)
-                    ->setCategory("printable support");
-
-            $manager->persist($product);
-        }
-
-        for($i = 61; $i <= 80; $i++)
-        {
-            $product = new Product();
-
-            $product->setName("product $i")
-                    ->setDescription("the product $i is an amazing product ! You are not ready !")
-                    ->setBarCode("I12345$i")
-                    ->setImage("http://placehold.it/350x150")
-                    ->setLocalisation("casier $i")
-                    ->setStock($i + 10)
-                    ->setCategory("other");
+            $product = new User();    
+            $product->setName("name$i")                 
+                    ->setDescription("description $i")
+                    ->setLastname("nom $i")
+                    ->setStatus("eleve")
+                    ->setPassword("mdp")
+                    ->setClass("terminale $i");
 
             $manager->persist($product);
         }
