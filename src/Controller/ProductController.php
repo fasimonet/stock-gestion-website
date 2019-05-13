@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\ProductSearch;
 use App\Form\ProductType;
@@ -44,6 +45,9 @@ class ProductController extends AbstractController
         $search = new ProductSearch();
         $search_form = $this->createForm(ProductSearchType::class, $search);
         $search_form->handleRequest($request);
+
+        $category=$this->manager->getRepository(Category::class)->find(6);
+        dump($category);
 
         $all_products = $paginator->paginate(
             $this->repo->findAllWithSearchManagement($search),
