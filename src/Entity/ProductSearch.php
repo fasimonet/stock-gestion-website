@@ -15,6 +15,11 @@ class ProductSearch
     private $barCode;
 
     /**
+     * @var Category|null
+     */
+    private $category;
+
+    /**
      * @return string|null
      */
     public function getName(): ?string
@@ -47,6 +52,24 @@ class ProductSearch
     public function setBarCode(string $barCode): self
     {
         $this->barCode = $barCode;
+        return $this;
+    }
+
+    /**
+     * @return Category|null
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param Category|null $category
+     * @return Category
+     */
+    public function setCategory(Category $category): self
+    {
+        $this->category = $category;
         return $this;
     }
 }

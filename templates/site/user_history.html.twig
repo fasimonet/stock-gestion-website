@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SiteController!{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h2>Historique des modifications de produits par l'utilisateur {{ user.username }}</h2>
+    <table class="table table-striped">
+        <tr>
+            <td>Intitulé</td>
+            <td>Date</td>
+            <td>Produit</td>
+        </tr>
+        {% for history in user.histories %}
+            <tr>
+                <td>{{ history.title }}</td>
+                <td>{{ history.createdAt|date("d/m/Y") }}</td>
+                <td>{{ history.product.name }}                
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

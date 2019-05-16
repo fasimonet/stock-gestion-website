@@ -58,7 +58,7 @@
                                         {% endif %}
                                     </p>
                                     <div class="actions" style="text-align : center">
-                                        <a href="#" class="btn btn-primary" style="margin: 2px">Consulter l'historique</a>
+                                        <a href="{{ path('user_history', {'id': user.id}) }}" class="btn btn-primary" style="margin: 2px">Consulter l'historique</a>
                                         <div class="crud">
                                             <a href="{{ path('delete_user', {'id': user.id}) }}" type="button" class="btn btn-danger" style="margin: 2px">Supprimer</a>
                                             <button type="button" class="btn btn-success" style="margin: 2px">Modifier</button>

@@ -32,6 +32,12 @@ class History
      */
     private $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="histories")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $product;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +75,18 @@ class History
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }

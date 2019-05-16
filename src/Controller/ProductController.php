@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\History;
 use App\Entity\Product;
 use App\Entity\ProductSearch;
 use App\Form\ProductType;
@@ -82,21 +83,35 @@ class ProductController extends AbstractController
      */
     public function form_product(Product $product = null, Request $request): Response
     {
+        $history = new History();
+        $history->setUser($this->get('security.token_storage')->getToken()->getUser())
+                ->setCreatedAt(new \DateTime());                
+
         if(!$product)
         {
             $product = new Product();
+            $history->setTitle("Creation nouveau produit");
         }
+
+        else 
+        {
+            $history->setTitle("Modification produit");
+        }
+        $history->setProduct($product);
 
         $form = $this->createForm(ProductType::class, $product);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $this->manager->persist($product);
+            $this->manager->persist($product);            
+            $this->manager->persist($history);
             $this->manager->flush();
 
             return $this->redirectToRoute('site');
         }
+
+        dump($product);
 
         return $this->render('site/create_product.html.twig', [
             'formProductCreation' => $form->createView(),

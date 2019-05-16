@@ -68,6 +68,10 @@ class ProductRepository extends ServiceEntityRepository
                            ->setParameter('regexp', '.*'.$search->getBarCode().'.*');            
         }
 
+        /*if ($search->getCategory()) {
+            $query = $query->andWhere('p.category = ')
+        }*/
+
         dump($search);
         return $query->getQuery();    
     }

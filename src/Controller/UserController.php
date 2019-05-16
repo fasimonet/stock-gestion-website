@@ -60,6 +60,20 @@ class UserController extends AbstractController
         return $this->redirectToRoute('user_pannel');
     }
 
+      /**
+     * @Route("/pole_plurimedia/user_pannel/{id}/history", name="user_history")
+     * @return Response
+     */
+    public function display_user_history(User $user): Response
+    {
+        // $manager->remove($user);
+        // $manager->flush();
+
+        return $this->render('site/user_history.html.twig', [
+            'user' => $user
+        ]);
+    }
+
     /**
      * @return Response
      */
