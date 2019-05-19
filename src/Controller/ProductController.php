@@ -103,6 +103,8 @@ class ProductController extends AbstractController
 
         $form->handleRequest($request);
 
+        dump($product);
+
         if($form->isSubmitted() && $form->isValid()) {
             $this->manager->persist($product);            
             $this->manager->persist($history);
@@ -110,8 +112,6 @@ class ProductController extends AbstractController
 
             return $this->redirectToRoute('site');
         }
-
-        dump($product);
 
         return $this->render('site/create_product.html.twig', [
             'formProductCreation' => $form->createView(),

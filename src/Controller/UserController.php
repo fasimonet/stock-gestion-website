@@ -22,7 +22,6 @@ class UserController extends AbstractController
     {
         $this->repo = $repo;
         $this->manager = $manager;
-        $this->current_display = 'table';
     }
 
     /**
@@ -45,7 +44,6 @@ class UserController extends AbstractController
             'controller_name' => 'SiteController',
             'users' => $users,
             'current_menu' => 'user_management',
-            'current_display' => $this->current_display,
             'search_form' => $search_form->createView()
         ]);
     }
@@ -56,8 +54,8 @@ class UserController extends AbstractController
      */
     public function delete_user(User $user): Response
     {
-        $manager->remove($user);
-        $manager->flush();
+        $this->manager->remove($user);
+        $this->manager->flush();
 
         return $this->redirectToRoute('user_pannel');
     }
@@ -68,43 +66,8 @@ class UserController extends AbstractController
      */
     public function display_user_history(User $user): Response
     {
-        // $manager->remove($user);
-        // $manager->flush();
-
         return $this->render('site/user_history.html.twig', [
             'user' => $user
-        ]);
-    }
-    
-    /**
-     * @Route("/admin/user_pannel/change_display", name="change_user_display")
-     * @return Response
-     */
-    public function change_display(PaginatorInterface $paginator, Request $request): Response
-    {
-        $search = new UserSearch();
-        $search_form = $this->createForm(UserSearchType::class, $search);
-        $search_form->handleRequest($request);
-
-        $users = $paginator->paginate(
-            $this->repo->findAllWithSearchManagement($search),
-            $request->query->getInt('page', 1),
-            12
-        );
-
-        if ($this->current_display == 'card') {
-            $this->current_display = 'table';
-        }
-        else {
-            $this->current_display = 'card';
-        }
-
-        return $this->render('site/user_pannel.html.twig', [
-            'controller_name' => 'SiteController',
-            'users' => $users,
-            'current_menu' => 'user_management',
-            'current_display' => $this->current_display,
-            'search_form' => $search_form->createView()
         ]);
     }
 }

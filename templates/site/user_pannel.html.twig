@@ -26,9 +26,7 @@
         </div>
 
         <a href="{{ path('security_registration') }}" class="btn btn-success">Ajouter utilisateur</a>
-        <a href="{{ path('change_user_display') }}" class="btn btn-secondary">Changer affichage</a>
 </div>
-        {% if current_display == 'card' %}
         <section class="users">
             <div class="container">
                 <div class="row">
@@ -61,38 +59,6 @@
                 </div>
             </div>
         </section>
-        {% else %}
-        <section class="users">
-            <div class="container">
-                <div class="row">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr class="table-header">
-                                <th>Prenom</th>
-                                <th>Nom</th>
-                                <th>Statut</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for user in users %}
-                                <tr>
-                                    <td>{{ user.firstname }}</td>
-                                    <td>{{ user.lastname }}</td>
-                                    <td>{% if user.status != null %} {{ user.status.title }} {% endif %}</td>  
-                                    <td>
-                                        <a href="{{ path('user_history', {'id': user.id}) }}" class="btn btn-primary" style="margin: 2px">Consulter l'historique</a>
-                                        <a href="{{ path('delete_user', {'id': user.id}) }}" type="button" class="btn btn-danger" style="margin: 2px">Supprimer</a>
-                                        <a href="{{ path('edit_security_registration', {'id': user.id}) }}" type="button" class="btn btn-success" style="margin: 2px">Modifier</a>
-                                    </td>                              
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-        {% endif %}
         <div class="pagination">
             {{ knp_pagination_render(users) }}
         </div>

@@ -23,26 +23,22 @@
         {% else %} 
             <h1>Création d'un produit</h1>
         {% endif %}
-
+        
         {{ form_start(formProductCreation) }}
-            
-        {{ form_row(formProductCreation.name, {'label': 'Nom', 'attr': {'placeholder': 'Nom du produit'}}) }}
-        {{ form_row(formProductCreation.category, {'label': 'Category'}) }}
-        {{ form_row(formProductCreation.description, {'label': 'Description', 'attr': {'placeholder': 'Description du produit'}}) }}
-        {{ form_row(formProductCreation.barCode, {'label': 'Code barre', 'attr': {'placeholder': 'Code barre du produit'}}) }}
-        {{ form_row(formProductCreation.localisation, {'label': 'Localisation', 'attr': {'placeholder': 'Localisation du produit'}}) }}
-        {{ form_row(formProductCreation.stock, {'label': 'Stock'}) }}
-
+            {{ form_row(formProductCreation.name) }}
+            {{ form_row(formProductCreation.category) }}
+            {{ form_row(formProductCreation.description) }}
+            {{ form_row(formProductCreation.barCode) }}
+            {{ form_row(formProductCreation.localisation) }}
+            {{ form_row(formProductCreation.stock) }}
+        
         <button type="submit" class="btn btn-primary">
             {% if editMode %}
                 Enregistrer
             {% else %} 
                 Créer un produit
             {% endif %}
-        </a>
-        
+        </button>
         {{ form_end(formProductCreation) }}
-
     {% endif %}
-
 {% endblock %}
