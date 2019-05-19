@@ -47,11 +47,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     */
-    private $status;
-
-    /**
-     * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="8", minMessage="Votre mot de passe doit faire minimum 8 caractères")
      */
     private $password;
@@ -70,6 +65,11 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\History", mappedBy="user")
      */
     private $histories;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Status", inversedBy="users")
+     */
+    private $status;
 
     public function __construct()
     {
@@ -113,18 +113,6 @@ class User implements UserInterface
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(string $status): self
-    {
-        $this->status = $status;
 
         return $this;
     }
@@ -176,6 +164,13 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+    public function setRoles(string $role): self
+    {
+        $this->roles[0] = $role;
+
+        return $this;
+    }
+
     /**
      * @return Collection|History[]
      */
@@ -206,4 +201,17 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getStatus(): ?Status
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?Status $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
 }

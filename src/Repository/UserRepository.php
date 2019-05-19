@@ -68,7 +68,11 @@ class UserRepository extends ServiceEntityRepository
                            ->setParameter('regexp', '.*'.$search->getLastname().'.*');            
         }
 
-        dump($search);
+        if ($search->getStatus() && $search->getStatus()->getTitle() != 'Tous') {
+            $query = $query->andWhere('u.status = :status')
+                           ->setParameter('status', $search->getStatus());
+        }
+
         return $query->getQuery();    
     }
 

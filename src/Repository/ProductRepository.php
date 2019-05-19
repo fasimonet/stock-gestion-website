@@ -68,11 +68,11 @@ class ProductRepository extends ServiceEntityRepository
                            ->setParameter('regexp', '.*'.$search->getBarCode().'.*');            
         }
 
-        /*if ($search->getCategory()) {
-            $query = $query->andWhere('p.category = ')
-        }*/
+        if ($search->getCategory() && $search->getCategory()->getTitle() != 'Toutes') {
+            $query = $query->andWhere('p.category = :category')
+                           ->setParameter('category', $search->getCategory());
+        }
 
-        dump($search);
         return $query->getQuery();    
     }
 

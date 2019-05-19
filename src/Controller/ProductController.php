@@ -152,4 +152,18 @@ class ProductController extends AbstractController
             'current_menu' => 'stock_management',
         ]);
     }
+
+    /**
+     * @Route("/pole_plurimedia/product/{id}/history", name="product_history")
+     * @return Response
+     */
+    public function display_product_history(Product $product): Response
+    {
+        // $manager->remove($user);
+        // $manager->flush();
+
+        return $this->render('site/product_history.html.twig', [
+            'product' => $product
+        ]);
+    }
 }

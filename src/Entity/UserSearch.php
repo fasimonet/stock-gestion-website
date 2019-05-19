@@ -15,6 +15,11 @@ class UserSearch
     private $lastname;
 
     /**
+     * @var Status|null
+     */
+    private $status;
+
+    /**
      * @return string|null
      */
     public function getFirstname(): ?string
@@ -24,7 +29,7 @@ class UserSearch
 
     /**
      * @param string|null $firstname
-     * @return ProductSearch
+     * @return UserSearch
      */
     public function setFirstname(string $firstname): self
     {
@@ -42,11 +47,29 @@ class UserSearch
 
     /**
      * @param string|null $lastname
-     * @return ProductSearch
-     */
+     * @return UserSearch
+     */ 
     public function setLastName(string $lastname): self
     {
         $this->lastname = $lastname;
+        return $this;
+    }
+
+    /**
+     * @return Status|null
+     */
+    public function getStatus(): ?Status
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param Status|null $status
+     * @return UserSearch
+     */
+    public function setStatus(Status $status): self
+    {
+        $this->status = $status;
         return $this;
     }
 }

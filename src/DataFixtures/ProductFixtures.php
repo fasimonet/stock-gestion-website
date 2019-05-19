@@ -21,7 +21,6 @@ class ProductFixtures extends Fixture
             $product->setName("name$i")                 
                     ->setDescription("description $i")
                     ->setBarCode("123456$i")
-                    ->setImage("http://placehold.it/350x150")
                     ->setLocalisation("Casier 1")
                     ->setStock(100)
                     ->setCategory($category);

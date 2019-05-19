@@ -5,18 +5,18 @@
 {% block body %}
 
 <div class="container">
-    <h2>Historique des modifications de produits par l'utilisateur {{ user.username }}</h2>
+    <h2>Historique des modifications du produit {{ product.name }}</h2>
     <table class="table table-striped">
         <tr class="table-header">
             <th>Date</th>
             <th>Intitulé</th>
-            <th>Produit</th>
+            <th>Utilisateur</th>
         </tr>
-        {% for history in user.histories %}
+        {% for history in product.histories %}
             <tr>
                 <td>{{ history.createdAt|date("d/m/Y") }}</td>
                 <td>{{ history.title }}</td>
-                <td>{{ history.product.name }}</td>             
+                <td>{{ history.user.username }}</td>              
             </tr>
         {% endfor %}
     </table>

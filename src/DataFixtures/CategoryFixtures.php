@@ -11,14 +11,20 @@ class CategoryFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $category = new Category();
-        $category->setTitle('Support imprimable')
+        $category->setTitle('Toutes')
                  ->setDescription('');
 
         $manager->persist($category);
 
         $category = new Category();
+        $category->setTitle('Support imprimable')
+                 ->setDescription('Tous les types de support d\'impression : papiers, bois, toile ect');
+
+        $manager->persist($category);
+
+        $category = new Category();
         $category->setTitle('Encre')
-                 ->setDescription('');
+                 ->setDescription('Tous les types d\'encre quels que soient leur couleur ou leur type');
 
         $manager->persist($category);
 
@@ -30,7 +36,7 @@ class CategoryFixtures extends Fixture
 
         $category = new Category();
         $category->setTitle('Autre')
-                 ->setDescription('Gants');
+                 ->setDescription('Matériel de protection');
 
         $manager->persist($category);
 

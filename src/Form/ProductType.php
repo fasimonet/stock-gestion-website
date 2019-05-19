@@ -21,7 +21,6 @@ class ProductType extends AbstractType
             ])
             ->add('description')
             ->add('barCode')
-            ->add('image')
             ->add('localisation')
             ->add('stock')
         ;

@@ -15,7 +15,10 @@ class UserType extends AbstractType
             ->add('username')
             ->add('firstname')
             ->add('lastname')
-            ->add('status')
+            ->add('status', EntityType::class, [
+                'class' => Status::class,
+                'choice_label' => 'title'
+            ])
             ->add('password')
             ->add('class')
         ;

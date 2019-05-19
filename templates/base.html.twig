@@ -13,8 +13,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <!-- Latest compiled JavaScript for Bootstrap -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <!-- Latest compiled JavaScript for Quaggajs -->
-        <script src="dist/quagga.min.js"></script>
         {% endblock %}
     </head>
     <body>
@@ -29,12 +27,17 @@
                 <li class="nav-item">
                     <a class="nav-link {% if current_menu is defined and current_menu == 'home' %}active{% endif %}" href="{{ path("home") }}">Accueil</a>
                 </li>
-                {% if app.user %}
+                {% if app.user and app.user.roles[0] == 'ROLE_ADMIN' %}
                     <li class="nav-item">
                         <a class="nav-link {% if current_menu is defined and current_menu == 'stock_management' %}active{% endif %}" href="{{ path("site") }}"> Gestion de stock</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if current_menu is defined and current_menu == 'user_management' %}active{% endif %}" href="{{ path("user_pannel") }}">Gestion d'utilisateur</a>
+                    </li>
+                {% endif %}
+                {% if app.user and app.user.roles[0] == 'ROLE_USER' %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if current_menu is defined and current_menu == 'stock_management' %}active{% endif %}" href="{{ path("site") }}"> Gestion de stock</a>
                     </li>
                 {% endif %}
                 </ul>
@@ -48,6 +51,11 @@
         <div class="container">
             {% block body %}{% endblock %}
         </div>
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            <!-- Latest compiled JavaScript for Quaggajs -->
+            <script src="{{ asset('js/quagga.min.js') }}"></script>
+        {% endblock %}
     </body>
 </html>
+
+

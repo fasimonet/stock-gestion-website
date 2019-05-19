@@ -18,26 +18,17 @@
     {% else %}
         <div class="jumbotron">
             {{ form_start(search_form) }}
-            {{ form_row(search_form.firstname, {'label': 'Prénom', 'attr': {'placeholder': 'Nom du produit à rechercher'}}) }}
-            {{ form_row(search_form.lastname, {'label': 'Nom', 'attr': {'placeholder': 'Nom du produit à rechercher'}}) }}
+            {{ form_row(search_form.firstname, {'label': 'Prénom', 'attr': {'placeholder': 'Nom de l\'utilisateur à rechercher'}}) }}
+            {{ form_row(search_form.lastname, {'label': 'Nom', 'attr': {'placeholder': 'Nom de l\'utilisateur à rechercher'}}) }}
+            {{ form_row(search_form.status, {'label': 'Statut'})}}
             <button class="btn btn-primary">Rechercher</button>
             {{ form_end(search_form) }}
         </div>
-        <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin: auto">
-            <label class="btn btn-primary active">
-                <input type="radio" checked="" autocomplete="off"> Tous
-            </label>
-            <label class="btn btn-primary">
-                <input type="radio" checked="" autocomplete="off"> Professeur
-            </label>
-            <label class="btn btn-primary">
-                <input type="radio" autocomplete="off"> Eleve
-            </label>
-        </div>
 
-        <a href="#" class="btn btn-success" style="float:right">Ajouter utilisateur</a>
+        <a href="{{ path('security_registration') }}" class="btn btn-success">Ajouter utilisateur</a>
+        <a href="{{ path('change_user_display') }}" class="btn btn-secondary">Changer affichage</a>
 </div>
-
+        {% if current_display == 'card' %}
         <section class="users">
             <div class="container">
                 <div class="row">
@@ -45,11 +36,10 @@
                         <article class="col-md-4">
                             <div class="card border-primary mb-3">
                                 <div class="card-header bg-primary" style="color: white">
-                                    <span class="badge badge-light" style="float: right; margin: 2px"> {{ user.status }} </span>
                                     {{ user.firstname}} {{user.lastname}}
                                 </div>
                                 <div class="card-body">
-                                    <p>Statut : {{ user.status }}</p>
+                                    <p>Statut : {% if user.status != null %} {{ user.status.title }} {% endif %}</p>
                                     <p>Classe : 
                                         {% if user.class == null %}
                                             Aucune
@@ -61,7 +51,7 @@
                                         <a href="{{ path('user_history', {'id': user.id}) }}" class="btn btn-primary" style="margin: 2px">Consulter l'historique</a>
                                         <div class="crud">
                                             <a href="{{ path('delete_user', {'id': user.id}) }}" type="button" class="btn btn-danger" style="margin: 2px">Supprimer</a>
-                                            <button type="button" class="btn btn-success" style="margin: 2px">Modifier</button>
+                                            <a href="{{ path('edit_security_registration', {'id': user.id}) }}" type="button" class="btn btn-success" style="margin: 2px">Modifier</a>
                                         </div>
                                     </div>
                                 </div>
@@ -71,6 +61,38 @@
                 </div>
             </div>
         </section>
+        {% else %}
+        <section class="users">
+            <div class="container">
+                <div class="row">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr class="table-header">
+                                <th>Prenom</th>
+                                <th>Nom</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                                <tr>
+                                    <td>{{ user.firstname }}</td>
+                                    <td>{{ user.lastname }}</td>
+                                    <td>{% if user.status != null %} {{ user.status.title }} {% endif %}</td>  
+                                    <td>
+                                        <a href="{{ path('user_history', {'id': user.id}) }}" class="btn btn-primary" style="margin: 2px">Consulter l'historique</a>
+                                        <a href="{{ path('delete_user', {'id': user.id}) }}" type="button" class="btn btn-danger" style="margin: 2px">Supprimer</a>
+                                        <a href="{{ path('edit_security_registration', {'id': user.id}) }}" type="button" class="btn btn-success" style="margin: 2px">Modifier</a>
+                                    </td>                              
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        {% endif %}
         <div class="pagination">
             {{ knp_pagination_render(users) }}
         </div>
