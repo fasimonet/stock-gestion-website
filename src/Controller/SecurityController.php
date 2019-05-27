@@ -49,6 +49,7 @@ class SecurityController extends AbstractController
 
         return $this->render('security/registration.html.twig', [
             'form' => $form->createView(),
+            'editMode' => $user->getId() !== null,
             'current_menu' => 'user_management'
         ]);
     }

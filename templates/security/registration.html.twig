@@ -2,7 +2,11 @@
 
 {% block body %}
 
-    <h1>Inscription sur le site</h1>
+    {% if editMode %}
+        <h1>Modification d'un utilisateur</h1>
+    {% else %} 
+        <h1>Inscription sur le site</h1>
+    {% endif %}
 
     {{ form_start(form) }}
     
@@ -14,7 +18,10 @@
     {{ form_row(form.status, {'label': 'Statut'}) }}
     {{ form_row(form.class, {'label': 'Classe', 'attr': {'placeholder': 'Classe'}}) }}
 
-    <button type="submit" class="btn btn-success">Inscription</button>
+    <button type="submit" class="btn btn-success">
+        {% if editMode %} Enregistrer {% else %} Inscription {% endif %}
+    </button>
+    
     {{ form_end(form) }}
 
 {% endblock %}
