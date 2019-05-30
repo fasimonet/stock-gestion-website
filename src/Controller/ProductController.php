@@ -108,6 +108,7 @@ class ProductController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             $this->manager->persist($product);            
             $this->manager->persist($history);
+            dump($product);
             $this->manager->flush();
 
             return $this->redirectToRoute('site');

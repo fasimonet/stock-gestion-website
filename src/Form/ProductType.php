@@ -45,7 +45,7 @@ class ProductType extends AbstractType
                     'label' => 'Nom',
                     'attr' => [
                         'placeholder' => 'Nom du produit',
-                        'disabled' => 'disabled'
+                        'readonly' => 'readonly'
                     ]
                 ])
                 ->add('category', EntityType::class, [
@@ -53,28 +53,28 @@ class ProductType extends AbstractType
                     'choice_label' => 'title',
                     'label' => 'Catégorie',
                     'attr' => [
-                        'disabled' => 'disabled'
+                        'readonly' => 'readonly'
                     ]
                 ])
                 ->add('description', null, [
                     'label' => 'Description',
                     'attr' => [
                         'placeholder' => 'Description du produit',
-                        'disabled' => 'disabled'
+                        'readonly' => 'readonly'
                     ]
                 ])
                 ->add('barCode', null, [
                     'label' => 'Code barre',
                     'attr' => [
                         'placeholder' => 'Code barre du produit',
-                        'disabled' => 'disabled'
+                        'readonly' => 'readonly'
                     ]
                 ])
                 ->add('localisation', null, [
                     'label' => 'Localisation',
                     'attr' => [
                         'placeholder' => 'Localisation du produit',
-                        'disabled' => 'disabled'
+                        'readonly' => 'readonly'
                     ]
                 ])
             ;         
